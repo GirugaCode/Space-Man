@@ -15,13 +15,50 @@ def load_word():
    return secret_word
 
 
-def show_guess_list(guessed_list):
+def display_guess_list(guessed_list):
     print(' '.join(guessed_list))
 
-def show_attempt_list(attempt_list):
+def display_attempt_list(attempt_list):
     print('\nLetters attempted')
     print(' '.join(attempt_list))
 
+# Input error handling
+def guess_input():
+    try:
+        guess = input("Guess a letter:")
+        if len(guess) > 1:
+            print("Invalid input! Please enter only one letter.")
+            return guess_input()
+        elif guess.isalpha():
+            print("Invalid input! Please enter a letter.")
+            return guess_input()
+        else:
+            return guess.upper()
+    except (TypeError, ValueError, EOFError):
+        print("Invalid input!")
+        return guess_input()
+
+# Creates a guess function
+def guess(guessed_list):
+    guess = guess_input()
+    input_letter = False
+    attempts = guess in attempt_list
+    if guess not in attempt_list:
+        attempt.append(guess)
+    for index, letter in enumerate(correct_list):
+        if letter == guess:
+            attempt_list[index] = letter
+            input_letter = True
+    return input_letter or attempts
+
+# Display the beginning of the game
+def display_start(secret_word):
+    print("""Welcome to Spaceman!
+    You only have seven (7) wrong attempts to correctly guess the word or else non-spaceman go to space!
+    """)
+    
+    print("Your word has: " + str(len(secret_word)) + " letter" +
+          ("s" if len(secret_word) > 1 else ""))
 
 ### def is_word_guessed(secret_word, letters_guessed):
 #     '''
